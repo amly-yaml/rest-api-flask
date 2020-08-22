@@ -1,3 +1,5 @@
+
+import os    # operation system can access environmental variable
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -7,7 +9,8 @@ from resources.user import UserRegister
 from resources.store import Store, StoreList
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'   # instead of sqlite, can be oracle, mysle, postgresql
+# instead of sqlite, can be oracle, mysle, postgresql
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///mydatabase.db')  # 1st-Heroku postgres, 2nd-default sqlite
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # track the SQLalchemy
 app.secret_key = "shwekyi"
 api = Api(app)
